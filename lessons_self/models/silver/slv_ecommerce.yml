@@ -1,0 +1,63 @@
+version: 2
+
+models:
+  - name: slv_ecommerce__orders_products
+    description: "Order item data joined with product data"
+    columns:
+      - name: order_item_id
+        description: ""
+        tests:
+          - primary_key:
+              severity: error
+
+      - name: order_id
+        description: ""
+        tests:
+          - not_null
+
+      - &user_id
+        name: user_id
+        description: "Unique identifier of each user"
+        tests:
+          - not_null
+
+
+      - name: product_id
+        description: ""
+        tests:
+          - not_null
+
+      - name: item_sale_price
+        description: ""
+        tests:
+          - not_null
+
+      - name: product_department
+        description: "Whether the product is Menswear or Womenswear"
+        tests:
+          - not_null
+
+      - name: product_cost
+        description: "Production cost of the product"
+        tests:
+          - not_null
+
+      - name: product_retail_price
+        description: "Retail price of the product"
+        tests:
+          - not_null
+
+      - name: item_profit
+        description: "Difference between product retail price and product cost"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= (item_sale_price - product_cost)"
+
+      - name: item_discount
+        description: "Difference between retail price and item sale price"
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "= (product_retail_price - item_sale_price)"
+              # severity: skip

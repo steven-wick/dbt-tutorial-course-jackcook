@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: brz_ecommerce__products
+    description: "Products available on the online store"
+    ### The custom test can be placed here
+    # tests:
+    #   - dbt_utils.expression_is_true:
+          # expression: "retail_price >= cost"
+    columns:
+      - name: product_id
+        description: ""
+        tests:
+          - primary_key:
+              severity: error
+              # where: "department = 'Men'"
+          # - not_null:
+          #     severity: error
+          # - unique:
+          #     severity: error
+
+      - name: cost
+        description: "The cost of the product that the business has to purchase"
+        tests:
+          - not_null
+              # warn_if: ">10"
+              # error_if: ">100"
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+              # max_value: 100
+          # - col_min_value:
+          #     value: 10
+
+      - name: category
+        description: ""
+
+      - name: name
+        description: ""
+
+      - name: brand
+        description: "Product's brand name"
+
+      - name: retail_price
+        description: "Retail price of the product on the online store"
+        tests:
+          - not_null
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+          - dbt_utils.expression_is_true:
+              name: "retail_price_greater_than_cost"
+              expression: ">= cost"
+              # where: "retail_price IS NOT NULL"
+          
+
+      - name: department
+        description: "Whether the item is Menswear or Womenswear"
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - "Men"
+                - "Women"
+              quote: true
+              severity: error
+
+      - name: sku
+        description: ""
+
+      - name: distribution_center_id
+        description: ""

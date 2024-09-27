@@ -22,13 +22,22 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-models:
-  lessons_self:
-    +materialized: table
-
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+models:
+  lessons_self:
+    +materialized: table  # Default SQL models to be materialized as tables
+    +persist_docs:  # Write all column descriptions into the DB (BigQuery)
+      relation: true
+      columns: true
+    +hours_to_expiration: 168 # Table deletes 168 hours after creation
+
+tests:
+  lessons_self:
+    +severity: warn
+    gold:
+      +severity: error
 
 # In this example config, we tell dbt to build all models in the example/
 # directory as views. These settings can be overridden in the individual model

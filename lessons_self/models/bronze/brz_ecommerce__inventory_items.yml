@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: stg_ecommerce__inventory_items
+  - name: brz_ecommerce__inventory_items
     description: ""
     columns:
       - name: inventory_item_id
