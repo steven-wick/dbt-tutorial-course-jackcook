@@ -1,3 +1,9 @@
+{{
+	config(
+		materialized = 'table'
+	)
+}}
+
 WITH
 
 -- Aggregate measures
@@ -27,8 +33,13 @@ SELECT
 	om.total_sale_price,
 	om.total_product_cost,
 	om.total_profit,
-	om.total_discount
+	om.total_discount,
+
+	-- Comparison
+	TIMESTAMP_DIFF(od.created_at, first_od.first_order_created_at, DAY) AS days_since_first_order
 
 FROM {{ ref('brz_ecommerce__orders') }} od
 LEFT JOIN order_item_measures om
     ON od.order_id = om.order_id
+LEFT JOIN {{ ref('slv_ecommerce__first_order_by_user') }} first_od
+	ON od.user_id = first_od.user_id
