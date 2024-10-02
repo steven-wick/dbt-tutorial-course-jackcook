@@ -1,4 +1,4 @@
-{% snapshot snapshot__distributiton_centers %}
+{% snapshot snapshot__distribution_centers %}
 
 -- Tell dbt what to do for the changes
 {{
