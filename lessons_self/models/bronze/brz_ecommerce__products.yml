@@ -31,11 +31,11 @@ models:
           # - col_min_value:
           #     value: 10
 
-      - name: category
-        description: ""
+      # - name: category
+      #   description: ""
 
-      - name: name
-        description: ""
+      # - name: name
+      #   description: ""
 
       - name: brand
         description: "Product's brand name"
@@ -63,8 +63,20 @@ models:
               quote: true
               severity: error
 
-      - name: sku
-        description: ""
+      # - name: sku
+      #   description: ""
 
-      - name: distribution_center_id
-        description: ""
+      # - name: distribution_center_id
+      #   description: ""
+
+    latest_version: 2
+    versions:
+      - v: 1
+        columns:
+          - include: all
+            exclude: [brand]
+      - v: 2
+        config:
+          alias: brz_ecommerce__products
+        columns:
+          - include: all

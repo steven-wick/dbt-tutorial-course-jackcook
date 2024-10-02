@@ -3,6 +3,9 @@ version: 2
 models:
   - name: brz_ecommerce__orders
     description: "Table of 1 row per order"
+    # config:
+    #   contract:
+    #     enforced: true
     columns:
       - name: order_id
         description: ""

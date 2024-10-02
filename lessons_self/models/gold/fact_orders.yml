@@ -1,8 +1,20 @@
 version: 2
 
+groups:
+  - name: sales
+    owner:
+      email: sales@t2decor.com
+  - name: marketing
+    owner:
+      email: marketing@t2decor.com
+
 models:
   - name: fact_orders
     description: "Table of order level information"
+    config:
+      group: sales
+
+    access: private
     columns:
 
     # Columns from stg_ecommerce__orders
